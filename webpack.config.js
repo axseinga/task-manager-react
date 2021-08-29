@@ -1,25 +1,27 @@
-const path = require('path');
+const path = require("path");
 // importuję bibliotękę [path] z [node.js]
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 // importuję odpowiedni plugin
 module.exports = {
-    entry: './src/app.js',
+    entry: {
+        app: ["whatwg-fetch", "./src/app.js"],
+    },
     // definiuje plik wejściowy
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, "build"),
         // definiuje ścieżką wyjściową
-        filename: 'app.min.js',
+        filename: "app.min.js",
         // definiuję nazwę pliku wyjściowego
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                // określam jakie pliki 
+                // określam jakie pliki
                 // będą brane pod uwagę
                 exclude: /node_modules/,
                 // określam wykluczenia
-                use: 'babel-loader',
+                use: "babel-loader",
                 // określam jaki [loader]
                 // ma być wykorzystany
             },
@@ -28,23 +30,23 @@ module.exports = {
                 // wszystkie pliki, których nazwa
                 // kończy się na .css
                 use: [
-                    'style-loader',
+                    "style-loader",
                     // dodaj odczytaną zawartość
                     // do znacznika <style/>
-                    'css-loader', 
+                    "css-loader",
                     // odczytaj plik CSS
                 ],
-            }
-        ]
+            },
+        ],
         // obecnie brak dodatkowych ustawień
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: "./src/index.html",
             // wskazuję plik źródłowy
-            filename: 'index.html'
+            filename: "index.html",
             // określam nazwę dla pliku
-        })
-    ]
-}
+        }),
+    ],
+};
 // eksportuję ustawienia dla webpack-a

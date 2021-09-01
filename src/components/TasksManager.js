@@ -23,18 +23,23 @@ class TasksManager extends React.Component {
     };
 
     addItem = (task) => {
-        console.log(task);
+        const item = {
+            name: task,
+            time: 0,
+            isRunning: false,
+            isDone: false,
+            isRemoved: false,
+        };
         const options = {
             method: "POST",
-            mode: "cors",
-            body: JSON.stringify(task),
-            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(item),
+            headers: { "Content-Type": "application/json" },
         };
         const url = "http://localhost:3005/data";
 
         const promise = fetch(url, options);
 
-        return promise
+        promise
             .then((resp) => {
                 if (resp.ok) {
                     return resp.json();
@@ -42,9 +47,34 @@ class TasksManager extends React.Component {
                 return Promise.reject(resp);
             })
             .then((data) => {
-                console.log(data);
+                const newItem = data;
+                this.setState((state) => {
+                    return {
+                        tasks: [...state.tasks, newItem],
+                    };
+                });
             })
             .catch((err) => console.log(err));
+    };
+
+    handleToggle = () => {
+        this.setState((state) => {
+            const arr = state.tasks.map((item) => {
+                if (item.isRunning === false) {
+                    this.timer = setInterval(() => {
+                        console.log("timer should start");
+                        item.isRunning = true;
+                        item.time = item.time + 1;
+                        console.log(item.time);
+                    }, 1000);
+                } else if (item.isRunning === true) {
+                    console.log("timer should stop");
+                    clearInterval(this.timer);
+                    item.isRunning = false;
+                }
+            });
+            return arr;
+        });
     };
 
     render() {
@@ -60,6 +90,18 @@ class TasksManager extends React.Component {
                     ></input>
                     <button>Dodaj zadanie</button>
                 </form>
+                {this.state.tasks.map((item) => (
+                    <section key={item.id}>
+                        <header>Zadanie 1, {item.time}</header>
+                        <footer>
+                            <button onClick={this.handleToggle}>
+                                start/stop
+                            </button>
+                            <button>zakończone</button>
+                            <button disabled={true}>usuń</button>
+                        </footer>
+                    </section>
+                ))}
             </div>
         );
     }

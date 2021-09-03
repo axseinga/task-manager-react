@@ -20,6 +20,7 @@ class TasksManager extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.addItem(this.state.task);
+        this.setState({ task: "" });
     };
 
     addItem = (task) => {
@@ -60,7 +61,6 @@ class TasksManager extends React.Component {
     incrementTime = (id) => {
         this.setState((state) => {
             const newTasks = state.tasks.map((task) => {
-                console.log(id, task.id);
                 if (task.id === id) {
                     return { ...task, time: task.time + 1 };
                 } else {
@@ -74,23 +74,42 @@ class TasksManager extends React.Component {
         });
     };
 
-    handleToggle = () => {
-        this.setState((state) => {
-            state.tasks.map((item) => {
-                console.log(item);
-                if (item.isRunning === false) {
-                    console.log("interval should start");
-                    this.timer = setInterval(() => {
-                        item.isRunning = true;
-                        this.incrementTime(item.id);
-                    }, 1000);
-                } else if (item.isRunning === true) {
-                    item.isRunning = false;
-                    clearInterval(this.timer);
-                }
-            });
+    handleToggle = (id) => {
+        this.state.tasks.forEach((item) => {
+            if (item.id === id && item.isRunning === false) {
+                this.timer = setInterval(() => {
+                    item.isRunning = true;
+                    this.incrementTime(item.id);
+                }, 1000);
+            } else if (item.isRunning === true) {
+                item.isRunning = false;
+                clearInterval(this.timer);
+                this.updateAPI(item);
+            }
         });
     };
+
+    updateAPI(task) {
+        const options = {
+            method: "PUT",
+            body: JSON.stringify(task),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        const url = `http://localhost:3005/data/${task.id}`;
+
+        const promise = fetch(url, options);
+
+        promise
+            .then((resp) => {
+                if (resp.ok) {
+                    return resp.json();
+                }
+                return Promise.reject(resp);
+            })
+            .then((ip) => console.log(ip))
+            .catch((err) => console.error(err));
+    }
 
     formatTime = (time) => {
         let hrs = Math.floor(time / 3600);
@@ -123,7 +142,7 @@ class TasksManager extends React.Component {
                     <section key={item.id}>
                         <header>Zadanie 1, {this.formatTime(item.time)}</header>
                         <footer>
-                            <button onClick={this.handleToggle}>
+                            <button onClick={() => this.handleToggle(item.id)}>
                                 start/stop
                             </button>
                             <button>zakończone</button>

@@ -57,24 +57,53 @@ class TasksManager extends React.Component {
             .catch((err) => console.log(err));
     };
 
-    handleToggle = () => {
+    incrementTime = (id) => {
         this.setState((state) => {
-            const arr = state.tasks.map((item) => {
-                if (item.isRunning === false) {
-                    this.timer = setInterval(() => {
-                        console.log("timer should start");
-                        item.isRunning = true;
-                        item.time = item.time + 1;
-                        console.log(item.time);
-                    }, 1000);
-                } else if (item.isRunning === true) {
-                    console.log("timer should stop");
-                    clearInterval(this.timer);
-                    item.isRunning = false;
+            const newTasks = state.tasks.map((task) => {
+                console.log(id, task.id);
+                if (task.id === id) {
+                    return { ...task, time: task.time + 1 };
+                } else {
+                    return task;
                 }
             });
-            return arr;
+
+            return {
+                tasks: newTasks,
+            };
         });
+    };
+
+    handleToggle = () => {
+        this.setState((state) => {
+            state.tasks.map((item) => {
+                console.log(item);
+                if (item.isRunning === false) {
+                    console.log("interval should start");
+                    this.timer = setInterval(() => {
+                        item.isRunning = true;
+                        this.incrementTime(item.id);
+                    }, 1000);
+                } else if (item.isRunning === true) {
+                    item.isRunning = false;
+                    clearInterval(this.timer);
+                }
+            });
+        });
+    };
+
+    formatTime = (time) => {
+        let hrs = Math.floor(time / 3600);
+        let mins = Math.floor((time % 3600) / 60);
+        let secs = Math.floor(time % 60);
+
+        let ret = "";
+
+        ret += "" + (hrs < 10 ? "0" : "");
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
     };
 
     render() {
@@ -92,7 +121,7 @@ class TasksManager extends React.Component {
                 </form>
                 {this.state.tasks.map((item) => (
                     <section key={item.id}>
-                        <header>Zadanie 1, {item.time}</header>
+                        <header>Zadanie 1, {this.formatTime(item.time)}</header>
                         <footer>
                             <button onClick={this.handleToggle}>
                                 start/stop

@@ -8,6 +8,8 @@ class TasksManager extends React.Component {
         tasks: [],
     };
 
+    // handlers
+
     onClick = () => {
         const { tasks } = this.state;
         console.log(tasks);
@@ -23,14 +25,61 @@ class TasksManager extends React.Component {
         this.setState({ task: "" });
     };
 
-    addItem = (task) => {
-        const item = {
-            name: task,
-            time: 0,
-            isRunning: false,
-            isDone: false,
-            isRemoved: false,
-        };
+    handleToggle = (id) => {
+        this.state.tasks.forEach((item) => {
+            if (item.id === id && item.isRunning === false) {
+                this.timer = setInterval(() => {
+                    item.isRunning = true;
+                    this.incrementTime(item.id);
+                }, 1000);
+            } else if (item.id === id && item.isRunning === true) {
+                item.isRunning = !item.isRunning;
+                clearInterval(this.timer);
+                this.updateAPI(item);
+            }
+        });
+    };
+
+    handleFinish = (id) => {
+        this.state.tasks.forEach((item) => {
+            if (item.id === id) {
+                this.setState((state) => {
+                    const newTasks = state.tasks.map((task) => {
+                        if (task.id === id) {
+                            clearInterval(this.timer);
+                            return { ...task, isDone: true, isRunning: false };
+                        } else {
+                            return task;
+                        }
+                    });
+
+                    return {
+                        tasks: newTasks,
+                    };
+                });
+            } else return;
+        });
+    };
+
+    handleDelete = (id) => {
+        this.state.tasks.forEach((item) => {
+            if (item.id === id) {
+                this.setState((state) => {
+                    const newTasks = state.tasks.map((task) => {
+                        if (task.id === id) {
+                            return { ...task, isRemoved: true };
+                        } else return task;
+                    });
+
+                    return { tasks: newTasks };
+                });
+            }
+        });
+    };
+
+    // API
+
+    addToAPI(item) {
         const options = {
             method: "POST",
             body: JSON.stringify(item),
@@ -56,38 +105,7 @@ class TasksManager extends React.Component {
                 });
             })
             .catch((err) => console.log(err));
-    };
-
-    incrementTime = (id) => {
-        this.setState((state) => {
-            const newTasks = state.tasks.map((task) => {
-                if (task.id === id) {
-                    return { ...task, time: task.time + 1 };
-                } else {
-                    return task;
-                }
-            });
-
-            return {
-                tasks: newTasks,
-            };
-        });
-    };
-
-    handleToggle = (id) => {
-        this.state.tasks.forEach((item) => {
-            if (item.id === id && item.isRunning === false) {
-                this.timer = setInterval(() => {
-                    item.isRunning = true;
-                    this.incrementTime(item.id);
-                }, 1000);
-            } else if (item.isRunning === true) {
-                item.isRunning = false;
-                clearInterval(this.timer);
-                this.updateAPI(item);
-            }
-        });
-    };
+    }
 
     updateAPI(task) {
         const options = {
@@ -107,9 +125,35 @@ class TasksManager extends React.Component {
                 }
                 return Promise.reject(resp);
             })
-            .then((ip) => console.log(ip))
             .catch((err) => console.error(err));
     }
+
+    addItem = (task) => {
+        const item = {
+            name: task,
+            time: 0,
+            isRunning: false,
+            isDone: false,
+            isRemoved: false,
+        };
+        this.addToAPI(item);
+    };
+
+    incrementTime = (id) => {
+        this.setState((state) => {
+            const newTasks = state.tasks.map((task) => {
+                if (task.id === id) {
+                    return { ...task, time: task.time + 1 };
+                } else {
+                    return task;
+                }
+            });
+
+            return {
+                tasks: newTasks,
+            };
+        });
+    };
 
     formatTime = (time) => {
         let hrs = Math.floor(time / 3600);
@@ -138,18 +182,49 @@ class TasksManager extends React.Component {
                     ></input>
                     <button>Dodaj zadanie</button>
                 </form>
-                {this.state.tasks.map((item) => (
-                    <section key={item.id}>
-                        <header>Zadanie 1, {this.formatTime(item.time)}</header>
-                        <footer>
-                            <button onClick={() => this.handleToggle(item.id)}>
-                                start/stop
-                            </button>
-                            <button>zakończone</button>
-                            <button disabled={true}>usuń</button>
-                        </footer>
-                    </section>
-                ))}
+                {this.state.tasks.map((item) => {
+                    if (item.isRemoved === false) {
+                        return (
+                            <section key={item.id}>
+                                <header>
+                                    Zadanie 1, {this.formatTime(item.time)}
+                                </header>
+                                <footer>
+                                    <button
+                                        disabled={
+                                            item.isDone === true ? true : false
+                                        }
+                                        onClick={() =>
+                                            this.handleToggle(item.id)
+                                        }
+                                    >
+                                        start/stop
+                                    </button>
+                                    <button
+                                        disabled={
+                                            item.isDone === true ? true : false
+                                        }
+                                        onClick={() =>
+                                            this.handleFinish(item.id)
+                                        }
+                                    >
+                                        zakończone
+                                    </button>
+                                    <button
+                                        disabled={
+                                            item.isDone === true ? false : true
+                                        }
+                                        onClick={() =>
+                                            this.handleDelete(item.id)
+                                        }
+                                    >
+                                        usuń
+                                    </button>
+                                </footer>
+                            </section>
+                        );
+                    }
+                })}
             </div>
         );
     }

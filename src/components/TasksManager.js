@@ -47,12 +47,17 @@ class TasksManager extends React.Component {
                     const newTasks = state.tasks.map((task) => {
                         if (task.id === id) {
                             clearInterval(this.timer);
-                            return { ...task, isDone: true, isRunning: false };
+                            const newItem = {
+                                ...task,
+                                isDone: true,
+                                isRunning: false,
+                            };
+                            this.updateAPI(newItem);
+                            return newItem;
                         } else {
                             return task;
                         }
                     });
-
                     return {
                         tasks: newTasks,
                     };
@@ -67,7 +72,12 @@ class TasksManager extends React.Component {
                 this.setState((state) => {
                     const newTasks = state.tasks.map((task) => {
                         if (task.id === id) {
-                            return { ...task, isRemoved: true };
+                            const newItem = {
+                                ...task,
+                                isRemoved: true,
+                            };
+                            this.updateAPI(newItem);
+                            return newItem;
                         } else return task;
                     });
 
@@ -182,49 +192,60 @@ class TasksManager extends React.Component {
                     ></input>
                     <button>Dodaj zadanie</button>
                 </form>
-                {this.state.tasks.map((item) => {
-                    if (item.isRemoved === false) {
-                        return (
-                            <section key={item.id}>
-                                <header>
-                                    Zadanie 1, {this.formatTime(item.time)}
-                                </header>
-                                <footer>
-                                    <button
-                                        disabled={
-                                            item.isDone === true ? true : false
-                                        }
-                                        onClick={() =>
-                                            this.handleToggle(item.id)
-                                        }
-                                    >
-                                        start/stop
-                                    </button>
-                                    <button
-                                        disabled={
-                                            item.isDone === true ? true : false
-                                        }
-                                        onClick={() =>
-                                            this.handleFinish(item.id)
-                                        }
-                                    >
-                                        zakończone
-                                    </button>
-                                    <button
-                                        disabled={
-                                            item.isDone === true ? false : true
-                                        }
-                                        onClick={() =>
-                                            this.handleDelete(item.id)
-                                        }
-                                    >
-                                        usuń
-                                    </button>
-                                </footer>
-                            </section>
-                        );
-                    }
-                })}
+                {this.state.tasks
+                    .sort(function (x, y) {
+                        return x.isDone - y.isDone;
+                    })
+                    .map((item) => {
+                        if (item.isRemoved === false) {
+                            return (
+                                <section key={item.id}>
+                                    <header>
+                                        Zadanie {item.id}: {item.name},{" "}
+                                        {this.formatTime(item.time)}
+                                    </header>
+                                    <footer>
+                                        <button
+                                            disabled={
+                                                item.isDone === true
+                                                    ? true
+                                                    : false
+                                            }
+                                            onClick={() =>
+                                                this.handleToggle(item.id)
+                                            }
+                                        >
+                                            start/stop
+                                        </button>
+                                        <button
+                                            disabled={
+                                                item.isDone === true
+                                                    ? true
+                                                    : false
+                                            }
+                                            onClick={() =>
+                                                this.handleFinish(item.id)
+                                            }
+                                        >
+                                            zakończone
+                                        </button>
+                                        <button
+                                            disabled={
+                                                item.isDone === true
+                                                    ? false
+                                                    : true
+                                            }
+                                            onClick={() =>
+                                                this.handleDelete(item.id)
+                                            }
+                                        >
+                                            usuń
+                                        </button>
+                                    </footer>
+                                </section>
+                            );
+                        }
+                    })}
             </div>
         );
     }

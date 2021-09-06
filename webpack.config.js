@@ -12,6 +12,8 @@ module.exports = {
         // definiuje ścieżką wyjściową
         filename: "app.min.js",
         // definiuję nazwę pliku wyjściowego
+        library: "my-library",
+        libraryTarget: "umd",
     },
     module: {
         rules: [

@@ -1,6 +1,7 @@
 import React from "react";
 import "regenerator-runtime";
 import "whatwg-fetch";
+import { managerApi } from "./../ManagerApi";
 
 class TasksManager extends React.Component {
     state = {
@@ -181,16 +182,24 @@ class TasksManager extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1 onClick={this.onClick}>TasksManager</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="task">Zadanie:</label>
+            <div className="TasksManager">
+                <h1 className="TasksManager-title" onClick={this.onClick}>
+                    TasksManager
+                </h1>
+                <form
+                    className="TasksManager-form"
+                    onSubmit={this.handleSubmit}
+                >
+                    <label className="TasksManager-label" htmlFor="task">
+                        Task:
+                    </label>
                     <input
+                        className="TasksManager-input"
                         name="task"
                         value={this.state.task}
                         onChange={this.handleChange}
                     ></input>
-                    <button>Dodaj zadanie</button>
+                    <button className="TasksManager-btn">Add task</button>
                 </form>
                 {this.state.tasks
                     .sort(function (x, y) {
@@ -199,13 +208,17 @@ class TasksManager extends React.Component {
                     .map((item) => {
                         if (item.isRemoved === false) {
                             return (
-                                <section key={item.id}>
-                                    <header>
-                                        Zadanie {item.id}: {item.name},{" "}
+                                <section
+                                    className="TasksManager-task"
+                                    key={item.id}
+                                >
+                                    <header className="TasksManager-task-header">
+                                        Task {item.id}: {item.name},{" "}
                                         {this.formatTime(item.time)}
                                     </header>
-                                    <footer>
+                                    <footer className="TasksManager-task-footer">
                                         <button
+                                            className="TasksManager-btn"
                                             disabled={
                                                 item.isDone === true
                                                     ? true
@@ -218,6 +231,7 @@ class TasksManager extends React.Component {
                                             start/stop
                                         </button>
                                         <button
+                                            className="TasksManager-btn"
                                             disabled={
                                                 item.isDone === true
                                                     ? true
@@ -227,9 +241,10 @@ class TasksManager extends React.Component {
                                                 this.handleFinish(item.id)
                                             }
                                         >
-                                            zakończone
+                                            done
                                         </button>
                                         <button
+                                            className="TasksManager-btn"
                                             disabled={
                                                 item.isDone === true
                                                     ? false
@@ -239,7 +254,7 @@ class TasksManager extends React.Component {
                                                 this.handleDelete(item.id)
                                             }
                                         >
-                                            usuń
+                                            remove
                                         </button>
                                     </footer>
                                 </section>

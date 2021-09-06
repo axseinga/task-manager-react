@@ -1,3 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background: #dcdcdc;
+    background: linear-gradient(
+            130deg,
+            #5680e9 0%,
+            #84ceeb 25%,
+            #5ab9ea 50%,
+            #c1c8e4 75%,
+            #f0f2fd 100%
+        )
+        no-repeat center center fixed;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 300;
+    font-size: 1.1rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 4rem;
+}
+
+.TasksManager {
+    background: #a180df;
+    color: #f0f2fd;
+    width: 500px;
+    padding: 2rem 0;
+    box-shadow: -20px -20px 0px 0px rgba(100, 100, 100, 0.1);
+}
+
+.TasksManager-title {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.TasksManager-form {
+    background: #473170;
+    margin: 1rem 0;
+    padding: 1rem 0.5rem;
+}
+
+.TasksManager-label {
+    margin-right: 0.5rem;
+}
+
+.TasksManager-input {
+    height: 30px;
+    margin-right: 0.5rem;
+}
+
+.TasksManager-btn {
+    height: 30px;
+    width: 80px;
+    color: #f0f2fd;
+    background-color: transparent;
+    border: 1px solid #f0f2fd;
+    margin: 0 0.1rem;
+}
+
+.TasksManager-btn:disabled {
+    opacity: 0.5;
+}
+
+.TasksManager-task {
+    background: #736099;
+    margin: 1rem 0;
+    padding: 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.TasksManager-task-header {
+    margin: 0.2rem 0;
 }

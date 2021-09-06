@@ -31,14 +31,38 @@ class TasksManager extends React.Component {
             if (item.id === id && item.isRunning === false) {
                 this.timer = setInterval(() => {
                     item.isRunning = true;
+                    this.updateState(item, id, true);
                     this.incrementTime(item.id);
                 }, 1000);
             } else if (item.id === id && item.isRunning === true) {
                 item.isRunning = !item.isRunning;
+                this.updateState(item, id, false);
                 clearInterval(this.timer);
                 this.updateAPI(item);
             }
         });
+    };
+
+    updateState = (item, id, boolean) => {
+        if (item.id === id) {
+            this.setState((state) => {
+                const newTasks = state.tasks.map((task) => {
+                    if (task.id === id) {
+                        const newItem = {
+                            ...task,
+                            isRunning: boolean,
+                        };
+                        this.updateAPI(newItem);
+                        return newItem;
+                    } else {
+                        return task;
+                    }
+                });
+                return {
+                    tasks: newTasks,
+                };
+            });
+        } else return;
     };
 
     handleFinish = (id) => {
@@ -216,7 +240,7 @@ class TasksManager extends React.Component {
                                         Task {item.id}: {item.name},{" "}
                                         {this.formatTime(item.time)}
                                     </header>
-                                    <footer className="TasksManager-task-footer">
+                                    <footer className="TasksManager-footer">
                                         <button
                                             className="TasksManager-btn"
                                             disabled={

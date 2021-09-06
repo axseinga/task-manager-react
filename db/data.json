@@ -1,3 +1,68 @@
 {
-    "data": []
+  "data": [
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 1
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 2
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 3
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": true,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 4
+    },
+    {
+      "name": "zadanie 1",
+      "time": 13,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 5
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 6
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 7
+    },
+    {
+      "name": "zadanie 1",
+      "time": 12,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 8
+    }
+  ]
 }

@@ -43,6 +43,18 @@ class TasksManager extends React.Component {
         });
     };
 
+    checkIfTimerIsOn = () => {
+        this.state.tasks.forEach((task) => {
+            if (task.isRunning === true) {
+                console.log("another timer is running");
+                return false;
+            }
+            if (task.isRunning === false) {
+                return true;
+            }
+        });
+    };
+
     updateState = (item, id, boolean) => {
         if (item.id === id) {
             this.setState((state) => {

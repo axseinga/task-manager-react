@@ -2,7 +2,7 @@ import React from "react";
 import "regenerator-runtime";
 import "whatwg-fetch";
 
-class managerAPI {
+class ManagerApi {
     addToAPI(item) {
         const options = {
             method: "POST",
@@ -13,7 +13,7 @@ class managerAPI {
 
         const promise = fetch(url, options);
 
-        promise
+        return promise
             .then((resp) => {
                 if (resp.ok) {
                     return resp.json();
@@ -22,11 +22,13 @@ class managerAPI {
             })
             .then((data) => {
                 const newItem = data;
-                this.setState((state) => {
+                /*this.setState((state) => {
                     return {
                         tasks: [...state.tasks, newItem],
                     };
-                });
+                });*/
+                const newItem = data;
+                return data;
             })
             .catch((err) => console.log(err));
     }
@@ -42,7 +44,7 @@ class managerAPI {
 
         const promise = fetch(url, options);
 
-        promise
+        return promise
             .then((resp) => {
                 if (resp.ok) {
                     return resp.json();
@@ -53,4 +55,4 @@ class managerAPI {
     }
 }
 
-export default managerAPI;
+export default ManagerApi;

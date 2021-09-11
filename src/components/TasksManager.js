@@ -1,7 +1,7 @@
 import React from "react";
 import "regenerator-runtime";
 import "whatwg-fetch";
-import { managerApi } from "./../ManagerApi";
+import ManagerApi from "./../ManagerApi";
 
 class TasksManager extends React.Component {
     state = {
@@ -22,8 +22,14 @@ class TasksManager extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.addItem(this.state.task);
-        this.setState({ task: "" });
+        const newItem = ManagerApi.addItem(this.state.task);
+        this.setState((state) => {
+            return {
+                task: "",
+                tasks: [...state.tasks, newItem],
+            };
+        });
+        /*this.setState({ task: "" });*/
     };
 
     handleToggle = (id) => {
@@ -125,7 +131,7 @@ class TasksManager extends React.Component {
     };
 
     // API
-
+    /*
     addToAPI(item) {
         const options = {
             method: "POST",
@@ -173,7 +179,7 @@ class TasksManager extends React.Component {
                 return Promise.reject(resp);
             })
             .catch((err) => console.error(err));
-    }
+    }*/
 
     addItem = (task) => {
         const item = {

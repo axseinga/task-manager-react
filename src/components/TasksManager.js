@@ -8,6 +8,7 @@ class TasksManager extends React.Component {
         task: "",
         tasks: [],
     };
+    api = new ManagerApi();
 
     // handlers
 
@@ -22,13 +23,7 @@ class TasksManager extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const newItem = ManagerApi.addItem(this.state.task);
-        this.setState((state) => {
-            return {
-                task: "",
-                tasks: [...state.tasks, newItem],
-            };
-        });
+        const newItem = this.addItem(this.state.task);
         /*this.setState({ task: "" });*/
     };
 
@@ -44,7 +39,7 @@ class TasksManager extends React.Component {
                 item.isRunning = !item.isRunning;
                 this.updateState(item, id, false);
                 clearInterval(this.timer);
-                this.updateAPI(item);
+                this.api.updateAPI(item);
             }
         });
     };
@@ -70,7 +65,7 @@ class TasksManager extends React.Component {
                             ...task,
                             isRunning: boolean,
                         };
-                        this.updateAPI(newItem);
+                        this.api.updateAPI(newItem);
                         return newItem;
                     } else {
                         return task;
@@ -95,7 +90,7 @@ class TasksManager extends React.Component {
                                 isDone: true,
                                 isRunning: false,
                             };
-                            this.updateAPI(newItem);
+                            this.api.updateAPI(newItem);
                             return newItem;
                         } else {
                             return task;
@@ -119,7 +114,7 @@ class TasksManager extends React.Component {
                                 ...task,
                                 isRemoved: true,
                             };
-                            this.updateAPI(newItem);
+                            this.api.updateAPI(newItem);
                             return newItem;
                         } else return task;
                     });
@@ -189,7 +184,18 @@ class TasksManager extends React.Component {
             isDone: false,
             isRemoved: false,
         };
-        this.addToAPI(item);
+        this.api
+            .addToAPI(item)
+            .then((data) =>
+                this.setState((state) => {
+                    const newItem = data;
+                    return {
+                        task: "",
+                        tasks: [...state.tasks, newItem],
+                    };
+                })
+            )
+            .catch((err) => console.log("error"));
     };
 
     incrementTime = (id) => {

@@ -21,8 +21,8 @@ class ManagerApi {
                 return Promise.reject(resp);
             })
             .then((data) => {
-                const newItem = data;
-                /*this.setState((state) => {
+                /*const newItem = data;
+                this.setState((state) => {
                     return {
                         tasks: [...state.tasks, newItem],
                     };

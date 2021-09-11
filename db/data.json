@@ -1,3 +1,76 @@
 {
-    "data": []
+  "data": [
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 1
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 2
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 3
+    },
+    {
+      "name": "zadanie 1",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 4
+    },
+    {
+      "name": "zadanie 1",
+      "time": 2,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": true,
+      "id": 5
+    },
+    {
+      "name": "a",
+      "time": 2,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 6
+    },
+    {
+      "name": "zadanie 1",
+      "time": 2,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": true,
+      "id": 7
+    },
+    {
+      "name": "cos2",
+      "time": 2,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 8
+    },
+    {
+      "name": "",
+      "time": 0,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 9
+    }
+  ]
 }

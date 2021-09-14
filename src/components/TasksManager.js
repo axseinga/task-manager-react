@@ -12,11 +12,6 @@ class TasksManager extends React.Component {
 
     // handlers
 
-    onClick = () => {
-        const { tasks } = this.state;
-        console.log(tasks);
-    };
-
     handleChange = (e) => {
         this.setState({ task: e.target.value });
     };
@@ -24,7 +19,6 @@ class TasksManager extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         const newItem = this.addItem(this.state.task);
-        /*this.setState({ task: "" });*/
     };
 
     handleToggle = (id) => {
@@ -39,19 +33,8 @@ class TasksManager extends React.Component {
                 item.isRunning = !item.isRunning;
                 this.updateState(item, id, false);
                 clearInterval(this.timer);
+                this.timer = 0;
                 this.api.updateAPI(item);
-            }
-        });
-    };
-
-    checkIfTimerIsOn = () => {
-        this.state.tasks.forEach((task) => {
-            if (task.isRunning === true) {
-                console.log("another timer is running");
-                return false;
-            }
-            if (task.isRunning === false) {
-                return true;
             }
         });
     };
@@ -85,6 +68,7 @@ class TasksManager extends React.Component {
                     const newTasks = state.tasks.map((task) => {
                         if (task.id === id) {
                             clearInterval(this.timer);
+                            this.timer = 0;
                             const newItem = {
                                 ...task,
                                 isDone: true,
@@ -124,57 +108,6 @@ class TasksManager extends React.Component {
             }
         });
     };
-
-    // API
-    /*
-    addToAPI(item) {
-        const options = {
-            method: "POST",
-            body: JSON.stringify(item),
-            headers: { "Content-Type": "application/json" },
-        };
-        const url = "http://localhost:3005/data";
-
-        const promise = fetch(url, options);
-
-        promise
-            .then((resp) => {
-                if (resp.ok) {
-                    return resp.json();
-                }
-                return Promise.reject(resp);
-            })
-            .then((data) => {
-                const newItem = data;
-                this.setState((state) => {
-                    return {
-                        tasks: [...state.tasks, newItem],
-                    };
-                });
-            })
-            .catch((err) => console.log(err));
-    }
-
-    updateAPI(task) {
-        const options = {
-            method: "PUT",
-            body: JSON.stringify(task),
-            headers: { "Content-Type": "application/json" },
-        };
-
-        const url = `http://localhost:3005/data/${task.id}`;
-
-        const promise = fetch(url, options);
-
-        promise
-            .then((resp) => {
-                if (resp.ok) {
-                    return resp.json();
-                }
-                return Promise.reject(resp);
-            })
-            .catch((err) => console.error(err));
-    }*/
 
     addItem = (task) => {
         const item = {
@@ -228,6 +161,19 @@ class TasksManager extends React.Component {
         return ret;
     };
 
+    isStartStopButtonDisabled(task) {
+        if (task.isRunning) {
+            return false;
+        }
+        if (task.isDone) {
+            return true;
+        }
+
+        if (this.timer > 0) {
+            return true;
+        }
+    }
+
     render() {
         return (
             <div className="TasksManager">
@@ -267,11 +213,9 @@ class TasksManager extends React.Component {
                                     <footer className="TasksManager-footer">
                                         <button
                                             className="TasksManager-btn"
-                                            disabled={
-                                                item.isDone === true
-                                                    ? true
-                                                    : false
-                                            }
+                                            disabled={this.isStartStopButtonDisabled(
+                                                item
+                                            )}
                                             onClick={() =>
                                                 this.handleToggle(item.id)
                                             }
@@ -280,11 +224,9 @@ class TasksManager extends React.Component {
                                         </button>
                                         <button
                                             className="TasksManager-btn"
-                                            disabled={
-                                                item.isDone === true
-                                                    ? true
-                                                    : false
-                                            }
+                                            disabled={this.isStartStopButtonDisabled(
+                                                item
+                                            )}
                                             onClick={() =>
                                                 this.handleFinish(item.id)
                                             }

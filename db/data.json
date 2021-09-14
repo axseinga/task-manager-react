@@ -1,204 +1,28 @@
 {
   "data": [
     {
-      "name": "zadanie 1",
-      "time": 0,
+      "name": "walk the dog",
+      "time": 6,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
       "id": 1
     },
     {
-      "name": "zadanie 1",
-      "time": 0,
+      "name": "read the book",
+      "time": 10,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 2
     },
     {
-      "name": "zadanie 1",
+      "name": "water plants",
       "time": 0,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
       "id": 3
-    },
-    {
-      "name": "zadanie 1",
-      "time": 0,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 4
-    },
-    {
-      "name": "zadanie 1",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 5
-    },
-    {
-      "name": "a",
-      "time": 2,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 6
-    },
-    {
-      "name": "zadanie 1",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 7
-    },
-    {
-      "name": "cos2",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 8
-    },
-    {
-      "name": "",
-      "time": 0,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 9
-    },
-    {
-      "name": "zadanie 1",
-      "time": 17,
-      "isRunning": true,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 10
-    },
-    {
-      "name": "aaa",
-      "time": 1,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 11
-    },
-    {
-      "name": "zadanie 1",
-      "time": 4,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 12
-    },
-    {
-      "name": "zadanie 1",
-      "time": 3,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 13
-    },
-    {
-      "name": "cos2",
-      "time": 0,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 14
-    },
-    {
-      "name": "zadanie 1",
-      "time": 0,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 15
-    },
-    {
-      "name": "zadanie 1",
-      "time": 4,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 16
-    },
-    {
-      "name": "cos2",
-      "time": 4,
-      "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
-      "id": 17
-    },
-    {
-      "name": "zadanie 1",
-      "time": 5,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 18
-    },
-    {
-      "name": "cos2",
-      "time": 24,
-      "isRunning": true,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 19
-    },
-    {
-      "name": "zadanie 1",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 20
-    },
-    {
-      "name": "cos2",
-      "time": 5,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": false,
-      "id": 21
-    },
-    {
-      "name": "zadanie 1",
-      "time": 7,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 22
-    },
-    {
-      "name": "cos2",
-      "time": 6,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 23
-    },
-    {
-      "name": "zadanie 1",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 24
-    },
-    {
-      "name": "cos2",
-      "time": 2,
-      "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
-      "id": 25
     }
   ]
 }
